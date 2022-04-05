@@ -22,7 +22,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mysql2": "^2.1.0",
-    "sequelize": "^5.22.5"
+    "insomnia": "^0.0.1",
+    "mysql2": "^2.2.5",
+    "npm": "^8.5.5",
+    "sequelize": "^5.22.3"
   }
 }
