@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 
 const Sequelize = require('sequelize');
@@ -8,8 +9,9 @@ const sequelize = process.env.JAWSDB_URL
       host: 'localhost',
       dialect: 'mysql',
       dialectOptions: {
-        decimalNumbers: true,
+      decimalNumbers: true,
       },
+      port: 3001,
     });
 
 module.exports = sequelize;
