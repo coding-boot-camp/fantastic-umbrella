@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
+const { findAll } = require('../../models/Category');
 
 // The `/api/products` endpoint
 
@@ -7,12 +8,50 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
+  Product.findAll({
+    include: [{
+      model: Category
+    },
+    {
+      model: Tag,
+      through: ProductTag,
+      as: 'product_tags'
+    }]
+  })
+    .then(result => res.json(result))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+  })
+
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  Product.findOne({
+    where: { id: req.params.id },
+    include: [{
+      model: Category
+    },
+    {
+      model: Tag,
+      through: ProductTag,
+      as: 'product_tags'
+    }]
+  })
+    .then(result => {
+      if (!result) {
+        res.status(404).json({ message: "There is no product with this id" });
+        return;
+      }
+      res.json(result);
+    })
+    .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  })
 });
 
 // create new product
@@ -91,6 +130,16 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {id: req.params.id}
+  })
+    .then(destroyData => {
+      if (!destroyData) {
+        res.status(404).json({ message: "No product can be found with this id" });
+        return;
+      }
+      res.json({ message: "Product has been successfully deleted" });
+  })
 });
 
 module.exports = router;
