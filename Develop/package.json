@@ -22,7 +22,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "install": "^0.13.0",
     "mysql2": "^2.1.0",
-    "sequelize": "^5.21.7"
+    "npm": "^9.3.1",
+    "sequelize": "^6.28.0"
   }
 }
